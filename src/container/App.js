@@ -18,40 +18,6 @@ class App extends Component {
     showPerson: false
   }
 
-  nameChangedHandler = (event,id)=>{
-    const personIndex = this.state.persons.findIndex(p =>{
-      return p.id === id;
-    });
-    
-    const person = {...this.state.persons[personIndex]}; //Copy as Object before changing
-    person.name = event.target.value;
-
-    const updatedpersons = [...this.state.persons];
-    updatedpersons[personIndex] = person; //Adding update object to array
-
-    this.setState({persons: updatedpersons});
-  }
-
-  userInputHandler = (event) => {
-    this.setState({usernames:[
-      {name: event.target.value}, 
-      {name: event.target.value},
-      {name: event.target.value},
-    ]});
-  }
-
-  togglePersonsHandler = () => {
-    const isShow = this.state.showPerson;
-    this.setState({showPerson: !isShow});
-  }
-
-  deletePersonHandler = (personIndex) =>{
-    const personList = [...this.state.persons];//or const personList = this.state.persons.slice();
-    personList.splice(personIndex,1);
-    this.setState({persons: personList});
-  }
-
-
   render() {
     let persons = null;
     if(this.state.showPerson){
@@ -73,6 +39,41 @@ class App extends Component {
       </div>
     );
   }
+
+  nameChangedHandler = (event,id)=>{
+    const personIndex = this.state.persons.findIndex(p =>{
+      return p.id === id;
+    });
+    
+    const person = {...this.state.persons[personIndex]}; //Copy as Object before changing
+    person.name = event.target.value;
+
+    const updatedpersons = [...this.state.persons];
+    updatedpersons[personIndex] = person; //Adding update object to array
+
+    this.setState({persons: updatedpersons});
+  }
+
+
+  userInputHandler = (event) => {
+    this.setState({usernames:[
+      {name: event.target.value}, 
+      {name: event.target.value},
+      {name: event.target.value},
+    ]});
+  }
+
+  togglePersonsHandler = () => {
+    const isShow = this.state.showPerson;
+    this.setState({showPerson: !isShow});
+  }
+
+  deletePersonHandler = (personIndex) =>{
+    const personList = [...this.state.persons];//or const personList = this.state.persons.slice();
+    personList.splice(personIndex,1);
+    this.setState({persons: personList});
+  }
+
 }
 
 export default App;
