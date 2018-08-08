@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
+import cssClasses from './App.css';
 import Person from './Person/Person';
+//import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 //import UserOutput from './User/UserOutput';
 //import UserInput from './User/UserInput';
 //import Radium,{StyleRoot} from 'radium'; //Ability to use psuedo selectors :
@@ -35,7 +36,7 @@ class App extends Component {
     this.setState({persons: updatedpersons});
   }
 
-/*
+/* removed
   switchNameHandler = (newName) => {
     //console.log('Clicked');
     this.setState({persons:[
@@ -71,6 +72,8 @@ class App extends Component {
 
   render() {
 
+    //console.log(cssClasses);
+    /* removed to be used CSS Module
     const style = {
       backgroundColor: 'blue',
       color: 'white',
@@ -78,29 +81,34 @@ class App extends Component {
       border: '1px solid blue',
       padding: '8px',
       cursor: 'pointer',
-      /*':hover':{
+      ':hover':{
         backgroundColor: 'lightblue',
         color: 'black'
-      }*/
+      }
     };
+    */
 
     let persons = null;
+    let btnClass = '';
 
     if(this.state.showPerson){
       persons = (
         <div > 
           {this.state.persons.map((person, index) => {
             return <Person 
-                      click={() => this.deletePersonHandler(index)}
-                      name={person.name} 
-                      age={person.age}
-                      key={person.id}
-                      changed={(event)=>this.nameChangedHandler(event,person.id)}/>
+                        click={() => this.deletePersonHandler(index)}
+                        name={person.name} 
+                        age={person.age}
+                        key={person.id}
+                        changed={(event)=>this.nameChangedHandler(event,person.id)}/>
+                    
           })}  
         </div>
       );
-      style.backgroundColor = 'red';
-      /*style[':hover'] = {
+
+      btnClass = cssClasses.Red;
+      //style.backgroundColor = 'red'; removed to be used CSS Module
+      /*style[':hover'] = { removed to be used CSS Module
         backgroundColor: 'salmon',
         color: 'black'
       }*/
@@ -109,20 +117,19 @@ class App extends Component {
     //Setting ClassName Dynamically
     const classes = [];
     if(this.state.persons.length <= 2){
-      classes.push('red');
+      classes.push(cssClasses.red);
     }
     if(this.state.persons.length <= 1){
-      classes.push('bold');
+      classes.push(cssClasses.bold);
     }
 
     return (
-      //<StyleRoot> {/*For media queries*/}
-      <div className="App">
+      //<StyleRoot> {/*For media queries*/} removed to be used CSS Module
+      <div className={cssClasses.App}>
 
        <h1>Hi, I am learning ReactJS</h1>
        <p className={classes.join(' ')}>This is working</p>
-       <button 
-          style={style}
+       <button className={btnClass}
           onClick={this.togglePersonsHandler}>Toggle Person List</button>
         {persons}
 
@@ -131,10 +138,10 @@ class App extends Component {
         <UserOutput userName={this.state.usernames[1].name} />
         <UserOutput userName={this.state.usernames[2].name} /> */}
       </div>
-     // </StyleRoot>
+     // </StyleRoot> removed to be used CSS Module
     );
   }
 }
 
-//export default Radium(App);
+//export default Radium(App); removed to be used CSS Module
 export default App;
