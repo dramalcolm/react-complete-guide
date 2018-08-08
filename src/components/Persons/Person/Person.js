@@ -2,6 +2,23 @@ import React,{Component} from 'react';
 import cssPerson from './Person.css'; //Scoping css to component import "CSS Module"
 
 class Person extends Component {
+    constructor(props){
+        super(props);
+        console.log('[Person.js] inside constructor ',props);
+    }
+
+    componentWillMount(){
+        console.log('[Person.js] inside componentWillMount()');
+    }
+
+    componentDidMount(){
+        console.log('[Person.js] inside componentDidMount()');
+    }
+
+    componentWillUnmount(){
+        console.log('[Person.js] inside componentWillUnmount()');
+    }
+
     render (){
         return(
         <div className={cssPerson.Person} >
