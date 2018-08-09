@@ -5,8 +5,9 @@ import Cockpit from '../components/Cockpit/Cockpit';
 import Aux from '../hoc/Aux';
 import withClass from '../hoc/WithClass';
 
-//PureComponent should be used everywhere
+export const AuthContext = React.createContext(false);
 
+//PureComponent should be used everywhere
 class App extends PureComponent {
 
   constructor(props){
@@ -24,31 +25,43 @@ class App extends PureComponent {
         {name: 'Alphanso'},
       ],
       showPerson: false,
-      toggleClicked: 0
+      toggleClicked: 0,
+      authenticated: false
     }
   }
 
   //Start Component Lifecycle
+  /*Not useful in React ^16.3
   componentWillMount(){
     console.log('[App.js] inside componentWillMount()');
   }
-
+  */
   componentDidMount(){
     console.log('[App.js] inside componentDidMount()');
   }
   /*
+  Not useful in React ^16.3
+
   shouldComponentUpdate(nextProps, nextState){
     console.log('[SHOULD UPDATE App.js] inside shouldComponentUpdate()',nextProps,nextState);
     //return false; //Stop re-rendering;
     return nextState.persons !== this.state.persons || nextState.showPerson !== this.state.showPerson; 
   }
-  */
+  
   componentWillUpdate(nextProps){
       console.log('[WILL UPDATE App.js] inside componentWillUpdate()',nextProps);
   }
+  */
 
   componentDidUpdate(){
       console.log('[DID UPDATE App.js] inside componentDidUpdate()');
+  }
+
+  static getDerivedStateFromProps(nextProps,prevState){
+    console.log('[DERIVED STATE App.js] inside getDerivedStateFromProps()',
+    nextProps,prevState);
+
+    return prevState; //a valid state must be returned
   }
 
   render() {
@@ -60,7 +73,7 @@ class App extends PureComponent {
            <Persons 
               persons={this.state.persons} 
               click={this.deletePersonHandler} 
-              changed={this.nameChangedHandler} />
+              changed={this.nameChangedHandler}/>
       );
     }
     return (
@@ -70,12 +83,19 @@ class App extends PureComponent {
           pageTitle={this.props.title} 
           clicked={this.togglePersonsHandler} 
           persons={this.state.persons} 
-          showPerson={this.state.showPerson}/>
-        {persons}
+          showPerson={this.state.showPerson}
+          login={this.loingHandler}/>
+          <AuthContext.Provider value={this.state.authenticated}>
+            {persons}
+          </AuthContext.Provider>
       </Aux>
     );
   }
   //End Component Lifecycle
+
+  loingHandler=()=>{
+    this.setState({authenticated:true});
+  }
 
   nameChangedHandler = (event,id)=>{
     const personIndex = this.state.persons.findIndex(p =>{
