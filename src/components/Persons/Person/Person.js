@@ -16,6 +16,7 @@ class Person extends Component {
 
     componentDidMount(){
         console.log('[Person.js] inside componentDidMount()');
+        if(this.props.position === 0){this.inputElement.focus();}
     }
 
     componentWillUnmount(){
@@ -27,12 +28,16 @@ class Person extends Component {
         <Aux>
             <p onClick={this.props.click}>I'm a {this.props.name} and I am {this.props.age} years old!</p>
             <p>{this.props.children}</p>
-            <input type="text" onChange={this.props.changed} value={this.props.name}/>
+            <input type="text"
+                ref={(inp)=>{this.inputElement = inp}} 
+                onChange={this.props.changed} 
+                value={this.props.name}/>
         </Aux>
         )
     }
 };
 
+//install to validate type or property: npm install --save prop-types
 Person.propTypes = {
     click: PropTypes.func,
     name:PropTypes.string,
@@ -40,6 +45,6 @@ Person.propTypes = {
     changed: PropTypes.func
 };
 
-//install to validate type or property: npm install --save prop-types
+
 //export default Radium(person); removed to be used CSS Module
 export default withClass(Person,cssPerson.Person);
