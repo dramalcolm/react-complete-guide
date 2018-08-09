@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import cssClasses from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass';
 
 //PureComponent should be used everywhere
 
@@ -61,7 +62,7 @@ class App extends PureComponent {
       );
     }
     return (
-      <div className={cssClasses.App}>
+      <WithClass class={cssClasses.App}>
         <button onClick={()=>this.setState({showPerson:true})}>Show Persons</button>
         <Cockpit
           pageTitle={this.props.title} 
@@ -69,7 +70,7 @@ class App extends PureComponent {
           persons={this.state.persons} 
           showPerson={this.state.showPerson}/>
         {persons}
-      </div>
+      </WithClass>
     );
   }
   //End Component Lifecycle
