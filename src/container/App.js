@@ -63,6 +63,12 @@ class App extends PureComponent {
 
     return prevState; //a valid state must be returned
   }
+  
+  getSnapshotBeforeUpdate(prevProps, prevState){
+    console.log('[SNAPSHOT App.js] inside getSnapshotBeforeUpdate()');
+    return null;
+
+  }
 
   render() {
     console.log('[App.js] inside render()');
