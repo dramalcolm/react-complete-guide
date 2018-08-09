@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import cssClasses from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
-class App extends Component {
+//PureComponent should be used everywhere
+
+class App extends PureComponent {
 
   constructor(props){
     super(props);
@@ -23,12 +25,27 @@ class App extends Component {
     }
   }
 
+  //Start Component Lifecycle
   componentWillMount(){
     console.log('[App.js] inside componentWillMount()');
   }
 
   componentDidMount(){
     console.log('[App.js] inside componentDidMount()');
+  }
+  /*
+  shouldComponentUpdate(nextProps, nextState){
+    console.log('[SHOULD UPDATE App.js] inside shouldComponentUpdate()',nextProps,nextState);
+    //return false; //Stop re-rendering;
+    return nextState.persons !== this.state.persons || nextState.showPerson !== this.state.showPerson; 
+  }
+  */
+  componentWillUpdate(nextProps){
+      console.log('[WILL UPDATE App.js] inside componentWillUpdate()',nextProps);
+  }
+
+  componentDidUpdate(){
+      console.log('[DID UPDATE App.js] inside componentDidUpdate()');
   }
 
   render() {
@@ -45,6 +62,7 @@ class App extends Component {
     }
     return (
       <div className={cssClasses.App}>
+        <button onClick={()=>this.setState({showPerson:true})}>Show Persons</button>
         <Cockpit
           pageTitle={this.props.title} 
           clicked={this.togglePersonsHandler} 
@@ -54,6 +72,7 @@ class App extends Component {
       </div>
     );
   }
+  //End Component Lifecycle
 
   nameChangedHandler = (event,id)=>{
     const personIndex = this.state.persons.findIndex(p =>{
