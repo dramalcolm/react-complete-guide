@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react';
 import cssClasses from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
-import WithClass from '../hoc/WithClass';
+import Aux from '../hoc/Aux';
+import withClass from '../hoc/WithClass';
 
 //PureComponent should be used everywhere
 
@@ -22,7 +23,8 @@ class App extends PureComponent {
         {name: 'Malcolm'},
         {name: 'Alphanso'},
       ],
-      showPerson: false
+      showPerson: false,
+      toggleClicked: 0
     }
   }
 
@@ -62,7 +64,7 @@ class App extends PureComponent {
       );
     }
     return (
-      <WithClass class={cssClasses.App}>
+      <Aux>
         <button onClick={()=>this.setState({showPerson:true})}>Show Persons</button>
         <Cockpit
           pageTitle={this.props.title} 
@@ -70,7 +72,7 @@ class App extends PureComponent {
           persons={this.state.persons} 
           showPerson={this.state.showPerson}/>
         {persons}
-      </WithClass>
+      </Aux>
     );
   }
   //End Component Lifecycle
@@ -100,7 +102,12 @@ class App extends PureComponent {
 
   togglePersonsHandler = () => {
     const isShow = this.state.showPerson;
-    this.setState({showPerson: !isShow});
+    this.setState((prevState,props)=>{
+      return{
+      showPerson: !isShow,
+      toggleClicked:prevState.toggleClicked + 1 //relying on the previous state
+      }
+    });
   }
 
   deletePersonHandler = (personIndex) =>{
@@ -111,4 +118,4 @@ class App extends PureComponent {
 
 }
 
-export default App;
+export default withClass(App,cssClasses.App);
