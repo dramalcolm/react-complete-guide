@@ -36,6 +36,7 @@ class App extends PureComponent {
     console.log('[App.js] inside componentWillMount()');
   }
   */
+ 
   componentDidMount(){
     console.log('[App.js] inside componentDidMount()');
   }
